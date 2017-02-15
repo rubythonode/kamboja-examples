@@ -6,6 +6,7 @@ KambojaJs samples
 ```
 $ git clone git@github.com:kambojajs/kambojajs-examples.git
 $ cd kambojajs-examples
+$ cd basic
 $ npm install
 $ gulp
 ```
