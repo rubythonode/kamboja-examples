@@ -1,5 +1,5 @@
-import { UserRepository } from "../repository/user-repository"
-import { UserModel } from "../model/user-model"
+import { UserRepository } from "../app/repository/user-repository"
+import { UserModel } from "../app/model/user-model"
 import * as Chai from "chai"
 
 describe("UserRepository", () => {

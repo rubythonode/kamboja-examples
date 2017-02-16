@@ -8,10 +8,13 @@ describe.only("Integration Test", () => {
     let app: Express.Application;
     beforeEach(() => {
         let kamboja = new Kamboja(new ExpressEngine(), {
+            controllerPaths: ["app/controller"],
+            modelPath: "app/model",
+            viewPath: "app/view",
             errorHandler: (error: HttpError) => {
                 console.log(error.error)
                 //error.response.error(error.error)
-            }
+            },
         })
         app = kamboja.init()
     })
@@ -37,7 +40,7 @@ describe.only("Integration Test", () => {
             .expect(200)
     })
 
-    it("Should modify user properly", async () => {
+    it.only("Should modify user properly", async () => {
         return Supertest(app)
             .put("/user/nobi@domain.com")
             .send({ displayName: "Nobita Nobi Japan" })

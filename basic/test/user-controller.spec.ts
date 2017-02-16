@@ -1,6 +1,6 @@
-import { UserController } from "../controller/user-controller"
-import { UserModel } from "../model/user-model"
-import { UserRepository } from "../repository/user-repository"
+import { UserController } from "../app/controller/user-controller"
+import { UserModel } from "../app/model/user-model"
+import { UserRepository } from "../app/repository/user-repository"
 import { Validator } from "kamboja"
 import * as Chai from "chai"
 

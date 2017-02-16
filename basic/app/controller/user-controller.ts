@@ -18,7 +18,7 @@ export class UserController extends ApiController {
         return this.repository.get(email)
     }
 
-    add(@val.type("UserModel, model/user-model") data: UserModel) {
+    add(@val.type("UserModel, app/model/user-model") data: UserModel) {
         if (this.validator.isValid()) {
             try {
                 this.repository.add(data)
@@ -33,7 +33,7 @@ export class UserController extends ApiController {
         }
     }
 
-    modify(email, @val.type("DisplayNameModel, model/user-model") data: DisplayNameModel) {
+    modify(email, @val.type("DisplayNameModel, app/model/user-model") data: DisplayNameModel) {
         if (this.validator.isValid()) {
             try {
                 this.repository.modify(email, data)

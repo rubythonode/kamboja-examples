@@ -11,9 +11,9 @@ var gulp = require("gulp"),
 
 gulp.task("clean-source", function (cb) {
     return del([
-        "./src/**/*.js",
-        "./src/**/*.d.ts",
-        "./src/**/*.js.map"], cb)
+        "./app/**/*.js",
+        "./app/**/*.d.ts",
+        "./app/**/*.js.map"], cb)
 })
 
 gulp.task("clean-test", function (cb) {
@@ -46,13 +46,13 @@ var tsProject = tsc.createProject("tsconfig.json", {
 
 gulp.task("build-source", function () {
     return gulp.src([
-        "src/**/**.ts"
+        "app/**/**.ts"
     ])
         .pipe(tsProject())
         .on("error", function (err) {
             process.exit(1);
         })
-        .pipe(gulp.dest("src/"));
+        .pipe(gulp.dest("app/"));
 });
 
 var tsTestProject = tsc.createProject("tsconfig.json", {
@@ -88,7 +88,7 @@ gulp.task("mocha", function () {
 });
 
 gulp.task("istanbul:hook", function () {
-    return gulp.src(["src/**/*.js"])
+    return gulp.src(["app/**/*.js"])
         // Covering files
         .pipe(istanbul())
         // Force `require` to return covered files
