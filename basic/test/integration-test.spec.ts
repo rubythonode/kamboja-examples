@@ -4,7 +4,7 @@ import { ExpressEngine } from "kamboja-express"
 import * as Express from "express"
 import * as Supertest from "supertest"
 
-describe.only("Integration Test", () => {
+describe("Integration Test", () => {
     let app: Express.Application;
     beforeEach(() => {
         let kamboja = new Kamboja(new ExpressEngine(), {
@@ -40,7 +40,7 @@ describe.only("Integration Test", () => {
             .expect(200)
     })
 
-    it.only("Should modify user properly", async () => {
+    it("Should modify user properly", async () => {
         return Supertest(app)
             .put("/user/nobi@domain.com")
             .send({ displayName: "Nobita Nobi Japan" })
