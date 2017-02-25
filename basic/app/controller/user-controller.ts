@@ -1,4 +1,4 @@
-import {ApiController, val} from "kamboja"
+import { ApiController, val } from "kamboja"
 import { UserModel, DisplayNameModel } from "../model/user-model"
 import { UserRepository } from "../repository/user-repository"
 
@@ -18,10 +18,10 @@ export class UserController extends ApiController {
         return this.repository.get(email)
     }
 
-    add(@val.type("UserModel, app/model/user-model") data: UserModel) {
+    async add( @val.type("UserModel, app/model/user-model") data: UserModel) {
         if (this.validator.isValid()) {
             try {
-                this.repository.add(data)
+                await this.repository.add(data)
                 return { success: true }
             }
             catch (e) {
@@ -29,19 +29,28 @@ export class UserController extends ApiController {
             }
         }
         else {
-            return this.validator.getValidationErrors();
+            return {
+                success: false,
+                validation: this.validator.getValidationErrors()
+            };
         }
     }
 
-    modify(email, @val.type("DisplayNameModel, app/model/user-model") data: DisplayNameModel) {
+    async modify(email, @val.type("DisplayNameModel, app/model/user-model") data: DisplayNameModel) {
         if (this.validator.isValid()) {
             try {
-                this.repository.modify(email, data)
+                await this.repository.modify(email, data)
                 return { success: true }
             }
             catch (e) {
                 throw new Error("Unable to save user")
             }
+        }
+        else {
+            return {
+                success: false,
+                validation: this.validator.getValidationErrors()
+            };
         }
     }
 

@@ -55,10 +55,13 @@ describe("Integration Test", () => {
             .post("/user")
             .send({ email: "not-an-email", displayName: "Nobita Nobi" })
             .expect((result) => {
-                Chai.expect(result.body).deep.eq([{
-                    field: 'data.email',
-                    message: '[email] is not a valid email address'
-                }])
+                Chai.expect(result.body).deep.eq({
+                    success: false,
+                    validation: [{
+                        field: 'data.email',
+                        message: '[email] is not a valid email address'
+                    }]
+                })
             })
             .expect(200)
     })
