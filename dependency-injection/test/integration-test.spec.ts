@@ -1,0 +1,71 @@
+import * as Chai from "chai"
+import { Kamboja, HttpError, DependencyResolver } from "kamboja"
+import { ExpressEngine } from "kamboja-express"
+import * as Express from "express"
+import * as Supertest from "supertest"
+import { InversifyDependencyResolver } from "../app/wire/dependency-resolver"
+
+describe("Integration Test", () => {
+    let app: Express.Application;
+    let resolver: DependencyResolver = new InversifyDependencyResolver();
+    beforeEach(() => {
+        let kamboja = new Kamboja(new ExpressEngine(), {
+            controllerPaths: ["app/controller"],
+            modelPath: "app/model",
+            viewPath: "app/view",
+            dependencyResolver: resolver,
+            errorHandler: (error: HttpError) => {
+                console.log(error.error)
+            },
+        })
+        app = kamboja.init()
+    })
+
+    it("Should add user properly", async () => {
+        return Supertest(app)
+            .post("/user")
+            .send({ email: "nobi@domain.com", displayName: "Nobita Nobi" })
+            .expect((result) => {
+                Chai.expect(result.body).deep.eq({ success: true })
+            })
+            .expect(200)
+    })
+
+    it("Should get user properly", async () => {
+        return Supertest(app)
+            .get("/user/nobi@domain.com")
+
+            .expect((result) => {
+                Chai.expect(result.body).deep
+                    .eq({ email: "nobi@domain.com", displayName: "Nobita Nobi" })
+            })
+            .expect(200)
+    })
+
+    it("Should modify user properly", async () => {
+        return Supertest(app)
+            .put("/user/nobi@domain.com")
+            .send({ displayName: "Nobita Nobi Japan" })
+            .expect((result) => {
+                Chai.expect(result.body).deep.eq({ success: true })
+            })
+            .expect(200)
+    })
+
+    it("Should validate parameter properly", async () => {
+        return Supertest(app)
+            .post("/user")
+            .send({ email: "not-an-email", displayName: "Nobita Nobi" })
+            .expect((result) => {
+                Chai.expect(result.body).deep.eq({
+                    success: false,
+                    validation: [{
+                        field: 'data.email',
+                        message: '[email] is not a valid email address'
+                    }]
+                })
+            })
+            .expect(200)
+    })
+
+})
