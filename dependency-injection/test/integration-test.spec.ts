@@ -21,7 +21,7 @@ describe("Integration Test", () => {
         app = kamboja.init()
     })
 
-    it("Should add user properly", async () => {
+    it.only("Should add user properly", async () => {
         return Supertest(app)
             .post("/user")
             .send({ email: "nobi@domain.com", displayName: "Nobita Nobi" })
