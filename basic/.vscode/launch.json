@@ -24,16 +24,9 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceRoot}/index.js",
+            "name": "Launch",
+            "program": "${workspaceRoot}/app/index.js",
             "cwd": "${workspaceRoot}",
-            "outFiles": []
-        },
-        {
-            "type": "node",
-            "request": "attach",
-            "name": "Attach to Process",
-            "port": 5858,
             "outFiles": []
         }
     ]

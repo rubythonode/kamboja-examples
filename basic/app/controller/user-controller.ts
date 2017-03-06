@@ -14,50 +14,31 @@ export class UserController extends ApiController {
         return this.repository.getAll();
     }
 
-    get(email) {
+    get( @val.email() email) {
         return this.repository.get(email)
     }
 
     async add( @val.type("UserModel, app/model/user-model") data: UserModel) {
-        if (this.validator.isValid()) {
-            try {
-                await this.repository.add(data)
-                return { success: true }
-            }
-            catch (e) {
-                throw new Error("Unable to save user")
-            }
+        try {
+            await this.repository.add(data)
         }
-        else {
-            return {
-                success: false,
-                validation: this.validator.getValidationErrors()
-            };
+        catch (e) {
+            throw new Error("Unable to save user")
         }
     }
 
     async modify(email, @val.type("DisplayNameModel, app/model/user-model") data: DisplayNameModel) {
-        if (this.validator.isValid()) {
-            try {
-                await this.repository.modify(email, data)
-                return { success: true }
-            }
-            catch (e) {
-                throw new Error("Unable to save user")
-            }
+        try {
+            await this.repository.modify(email, data)
         }
-        else {
-            return {
-                success: false,
-                validation: this.validator.getValidationErrors()
-            };
+        catch (e) {
+            throw new Error("Unable to save user")
         }
     }
 
-    delete(email) {
+    delete( @val.email() email) {
         try {
             this.repository.delete(email)
-            return { success: true }
         }
         catch (e) {
             throw new Error("Unable to delete user")
