@@ -5,6 +5,10 @@ import "reflect-metadata"
 let kamboja = new Kamboja(new ExpressEngine(), {
     controllerPaths: ["app/controller"],
     modelPath: "app/model",
-    viewPath: "app/view"
+    viewPath: "app/view",
+    errorHandler: (e:HttpError) => {
+        console.log(e.error)
+        e.response.end()
+    }
 })
 kamboja.init().listen(5000)
