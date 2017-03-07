@@ -21,13 +21,10 @@ describe("Integration Test", () => {
         app = kamboja.init()
     })
 
-    it.only("Should add user properly", async () => {
+    it("Should add user properly", async () => {
         return Supertest(app)
             .post("/user")
             .send({ email: "nobi@domain.com", displayName: "Nobita Nobi" })
-            .expect((result) => {
-                Chai.expect(result.body).deep.eq({ success: true })
-            })
             .expect(200)
     })
 
@@ -44,11 +41,8 @@ describe("Integration Test", () => {
 
     it("Should modify user properly", async () => {
         return Supertest(app)
-            .put("/user/nobi@domain.com")
+            .patch("/user/nobi@domain.com")
             .send({ displayName: "Nobita Nobi Japan" })
-            .expect((result) => {
-                Chai.expect(result.body).deep.eq({ success: true })
-            })
             .expect(200)
     })
 
@@ -57,15 +51,12 @@ describe("Integration Test", () => {
             .post("/user")
             .send({ email: "not-an-email", displayName: "Nobita Nobi" })
             .expect((result) => {
-                Chai.expect(result.body).deep.eq({
-                    success: false,
-                    validation: [{
-                        field: 'data.email',
-                        message: '[email] is not a valid email address'
-                    }]
-                })
+                Chai.expect(result.body).deep.eq([{
+                    field: 'data.email',
+                    message: '[email] is not a valid email address'
+                }])
             })
-            .expect(200)
+            .expect(400)
     })
 
 })
