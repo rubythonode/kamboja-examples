@@ -4,6 +4,7 @@ import { ExpressEngine } from "kamboja-express"
 import * as Express from "express"
 import * as Supertest from "supertest"
 import { InversifyDependencyResolver } from "../app/wire/dependency-resolver"
+import { UserRepository } from "../app/repository/user-repository"
 
 describe("Integration Test", () => {
     let app: Express.Application;
@@ -16,22 +17,22 @@ describe("Integration Test", () => {
             dependencyResolver: resolver,
             errorHandler: (error: HttpError) => {
                 console.log(error.error)
+                error.response.error(error.error)
             },
         })
         app = kamboja.init()
+        let repo:UserRepository = resolver.resolve("UserRepository, app/repository/user-repository")
+        repo.clear()
     })
 
-    it("Should add user properly", async () => {
-        return Supertest(app)
+    it("Should add/get user properly", async () => {
+        await Supertest(app)
             .post("/user")
             .send({ email: "nobi@domain.com", displayName: "Nobita Nobi" })
             .expect(200)
-    })
 
-    it("Should get user properly", async () => {
-        return Supertest(app)
+        await Supertest(app)
             .get("/user/nobi@domain.com")
-
             .expect((result) => {
                 Chai.expect(result.body).deep
                     .eq({ email: "nobi@domain.com", displayName: "Nobita Nobi" })
@@ -40,9 +41,22 @@ describe("Integration Test", () => {
     })
 
     it("Should modify user properly", async () => {
-        return Supertest(app)
+        await Supertest(app)
+            .post("/user")
+            .send({ email: "nobi@domain.com", displayName: "Nobita Nobi" })
+            .expect(200)
+
+        await Supertest(app)
             .patch("/user/nobi@domain.com")
             .send({ displayName: "Nobita Nobi Japan" })
+            .expect(200)
+
+        await Supertest(app)
+            .get("/user/nobi@domain.com")
+            .expect((result) => {
+                Chai.expect(result.body).deep
+                    .eq({ email: "nobi@domain.com", displayName: "Nobita Nobi Japan" })
+            })
             .expect(200)
     })
 
@@ -57,6 +71,25 @@ describe("Integration Test", () => {
                 }])
             })
             .expect(400)
+    })
+
+    it("Should delete user properly", async () => {
+        await Supertest(app)
+            .post("/user")
+            .send({ email: "nobi@domain.com", displayName: "Nobita Nobi" })
+            .expect(200)
+
+        await Supertest(app)
+            .delete("/user/nobi@domain.com")
+            .expect(200)
+
+        await Supertest(app)
+            .get("/user/nobi@domain.com")
+            .expect((result) => {
+                Chai.expect(result.body).deep
+                    .eq({})
+            })
+            .expect(200)
     })
 
 })
