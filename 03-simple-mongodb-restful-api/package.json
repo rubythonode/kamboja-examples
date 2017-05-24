@@ -1,0 +1,18 @@
+{
+  "name": "simple-mongodb-restful-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Ketut Sandiarsa <ktutnik@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@types/body-parser": "^1.16.3",
+    "body-parser": "^1.17.2",
+    "kamboja-express": "0.0.1-36",
+    "kamboja-mongoose": "0.0.1-15"
+  }
+}

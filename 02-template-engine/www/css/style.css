@@ -1,0 +1,13 @@
+h1 {
+    border-bottom: 1px solid #ccc
+}
+
+.content {
+    width: 700px;
+    margin: 10px auto
+}
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 2rem;
+}
