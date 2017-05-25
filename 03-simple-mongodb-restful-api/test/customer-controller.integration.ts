@@ -39,10 +39,25 @@ describe("Customer Controller Integration", () => {
             Chai.expect(customer.name).eq("Nobita")
         })
 
-        it("Should return 400 empty data provided", async () => {
+        it("Should return 400 if empty data provided", async () => {
             let id: string = "";
             await Supertest(app)
                 .post("/customers")
+                .expect(400)
+            //make sure no data were added
+            let result = await CustomerOdm.find();
+            Chai.expect(result.length).eq(0)
+        })
+
+        it("Should return 400 if provided malformed json", async () => {
+            let id: string = "";
+            await Supertest(app)
+                .post("/customers")
+                .type("application/json")
+                .send(`{ "email": "nobita-nobi@gmail.com", "name": "Nobita`)
+                .expect((response:Supertest.Response) => {
+                    Chai.expect(response.body).eq("Unexpected end of JSON input")
+                })
                 .expect(400)
             //make sure no data were added
             let result = await CustomerOdm.find();
@@ -104,15 +119,100 @@ describe("Customer Controller Integration", () => {
                 .expect(200)
         })
 
-        it.only("Should return 400 if provided invalid customer id", async () => {
+        it("Should return 400 if provided invalid customer id", async () => {
             let customer = await new CustomerOdm({ email: "nobita-nobi@gmail.com", name: "Nobita" }).save()
             await Supertest(app)
-                .get(`/customers/not-valid-id`)
+                .get(`/customers/notvalid-id`)
                 .expect((response: Supertest.Response) => {
-                    console.log(response.text)
+                    Chai.expect(response.body[0].message).eq("[id] is not valid")
                 })
                 .expect(400)
         })
     })
 
+    describe("Delete customer", () => {
+        it("Should delete customer properly", async () => {
+            let customer = await new CustomerOdm({ email: "nobita-nobi@gmail.com", name: "Nobita" }).save()
+            await Supertest(app)
+                .delete(`/customers/${customer._id}`)
+                .expect((response: Supertest.Response) => {
+                    Chai.expect(response.body.email).eq("nobita-nobi@gmail.com")
+                    Chai.expect(response.body.name).eq("Nobita")
+                })
+                .expect(200)
+            //make sure no data left
+            let result = await CustomerOdm.find();
+            Chai.expect(result.length).eq(0)
+        })
+
+        it("Should return 400 if provided invalid customer id", async () => {
+            let customer = await new CustomerOdm({ email: "nobita-nobi@gmail.com", name: "Nobita" }).save()
+            await Supertest(app)
+                .delete(`/customers/notvalid-id`)
+                .expect((response: Supertest.Response) => {
+                    Chai.expect(response.body[0].message).eq("[id] is not valid")
+                })
+                .expect(400)
+        })
+    })
+
+    describe("Modify customer", () => {
+        it("Should modify customer properly", async () => {
+            let customer = await new CustomerOdm({ email: "nobita-nobi@gmail.com", name: "Nobita" }).save()
+            await Supertest(app)
+                .patch(`/customers/${customer._id}`)
+                .send({ name: "Suneo" })
+                .expect((response: Supertest.Response) => {
+                    Chai.expect(response.body.email).eq("nobita-nobi@gmail.com")
+                    Chai.expect(response.body.name).eq("Nobita")
+                })
+                .expect(200)
+            let result = await CustomerOdm.findById(customer._id);
+            Chai.expect(result.name).eq("Suneo")
+        })
+
+        it("Should return 400 if provided invalid customer id", async () => {
+            let customer = await new CustomerOdm({ email: "nobita-nobi@gmail.com", name: "Nobita" }).save()
+            await Supertest(app)
+                .patch(`/customers/notvalid-id`)
+                .expect((response: Supertest.Response) => {
+                    Chai.expect(response.body[0].message).eq("[id] is not valid")
+                })
+                .expect(400)
+        })
+    })
+
+    describe("Replace customer", () => {
+        it("Should replace customer properly", async () => {
+            let customer = await new CustomerOdm({ email: "nobita-nobi@gmail.com", name: "Nobita" }).save()
+            await Supertest(app)
+                .put(`/customers/${customer._id}`)
+                .send({ email: "suneo123@gmail.com", name: "Suneo" })
+                .expect(200)
+            let result = await CustomerOdm.findById(customer._id);
+            Chai.expect(result.email).eq("suneo123@gmail.com")
+            Chai.expect(result.name).eq("Suneo")
+        })
+
+        it("Should return 400 if provided invalid email", async () => {
+            let customer = await new CustomerOdm({ email: "nobita-nobi@gmail.com", name: "Nobita" }).save()
+            await Supertest(app)
+                .put(`/customers/${customer._id}`)
+                .send({ email: "suneo123", name: "Suneo" })
+                .expect((response: Supertest.Response) => {
+                    Chai.expect(response.body[0].message).eq("[email] is not a valid email address")
+                })
+                .expect(400)
+        })
+
+        it("Should return 400 if provided invalid customer id", async () => {
+            let customer = await new CustomerOdm({ email: "nobita-nobi@gmail.com", name: "Nobita" }).save()
+            await Supertest(app)
+                .put(`/customers/23-id`)
+                .expect((response: Supertest.Response) => {
+                    Chai.expect(response.body[0].message).eq("[id] is not valid")
+                })
+                .expect(400)
+        })
+    })
 })
