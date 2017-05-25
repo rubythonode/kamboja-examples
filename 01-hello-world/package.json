@@ -10,6 +10,6 @@
   "author": "Ketut Sandiarsa <ktutnik@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "kamboja-express": "0.0.1-36"
+    "kamboja-express": "0.0.1-37"
   }
 }

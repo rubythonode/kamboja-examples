@@ -2,9 +2,10 @@
   "name": "simple-mongodb-restful-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "bin",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node bin",
+    "test": "mocha"
   },
   "keywords": [],
   "author": "Ketut Sandiarsa <ktutnik@gmail.com>",
@@ -12,7 +13,14 @@
   "dependencies": {
     "@types/body-parser": "^1.16.3",
     "body-parser": "^1.17.2",
-    "kamboja-express": "0.0.1-36",
-    "kamboja-mongoose": "0.0.1-15"
+    "kamboja-express": "0.0.1-37",
+    "kamboja-mongoose": "0.0.1-16"
+  },
+  "devDependencies": {
+    "@types/chai": "^3.5.2",
+    "@types/mocha": "^2.2.41",
+    "@types/supertest": "^2.0.0",
+    "chai": "^3.5.0",
+    "supertest": "^3.0.0"
   }
 }

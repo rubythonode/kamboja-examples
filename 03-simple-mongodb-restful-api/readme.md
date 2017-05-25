@@ -1,6 +1,6 @@
 ## KambojaJS Simple Restful API 
 
-This example demonstrate how to create a simple Restful API with MongoDB database. This example also showing how to use validation, create custom validation.[Kamboja Mongoose Helper](https://github.com/kambojajs/kamboja-mongoose) used to generate mongoose schema from model.
+This example demonstrate how to create a simple Restful API with MongoDB database. This example also showing how to use validation. [Kamboja Mongoose Helper](https://github.com/kambojajs/kamboja-mongoose) used to generate mongoose schema from model.
 
 Requirements: 
 * A working NodeJs installation

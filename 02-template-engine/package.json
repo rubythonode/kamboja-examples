@@ -11,8 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "@types/morgan": "^1.7.32",
-    "kamboja-express": "0.0.1-36",
-    "morgan": "^1.8.1",
+    "kamboja-express": "0.0.1-37",
+    "morgan": "^1.8.2",
     "pug": "^2.0.0-rc.1"
   }
 }
