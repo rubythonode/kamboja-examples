@@ -3,7 +3,7 @@ import * as BodyParser from "body-parser"
 import { ObjectIdValidator } from "kamboja-mongoose"
 import { ErrorHandler } from "./middleware/error-handler"
 
-export const app = new KambojaApplication(<Core.KambojaOption>{
+export const app = new KambojaApplication({
     rootPath: __dirname,
     validators: [new ObjectIdValidator()]
 })
