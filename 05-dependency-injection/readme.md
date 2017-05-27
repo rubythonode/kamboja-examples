@@ -35,7 +35,7 @@ Requirements:
 
 ```
 $ git clone git@github.com:kambojajs/kamboja-examples.git
-$ cd 04-nested-restful-api
+$ cd 05-dependency-injection
 $ npm install
 $ tsc && node bin
 ```
