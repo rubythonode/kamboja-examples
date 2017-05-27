@@ -10,7 +10,7 @@ This example demonstrate how to create a Nested Restful API with MongoDB databas
 4. Use [mongoose helper](https://github.com/kambojajs/kamboja-mongoose) automatically generate mongoose schema from model.
 5. Use [middleware](http://kambojajs.com/reference/middleware) to create custom error that return json result
 
-## List of route that we will create is:
+## List of Routes that Automatically Generated
 
 Customer API
 
