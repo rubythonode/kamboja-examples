@@ -7,7 +7,7 @@ This example demonstrate how to create a Nested Restful API with MongoDB databas
 1. Use KambojaJS [`ApiController`](http://kambojajs.com/reference/api-controller) to create Restful API using convention over configuration
 2. Use `@http.root()` to create [nested Restful API](http://kambojajs.com/reference/api-controller#nested-resources) and keep using convention over configuration 
 3. Use `@val.type()` for adding [model validation](http://kambojajs.com/reference/validation) to an action parameter 
-4. Use `@val` for validating model
+4. Use [mongoose helper](https://github.com/kambojajs/kamboja-mongoose) automatically generate mongoose schema from model.
 5. Use [middleware](http://kambojajs.com/reference/middleware) to create custom error that return json result
 
 ## List of route that we will create is:
