@@ -2,7 +2,16 @@
 
 This example demonstrate how to create a nested Restful API with dependency injection in KambojaJS. Dependency injection framework used is [Inversify](http://inversify.io/) 
 
-Here are list of routes created on this example
+## What you will find on this example
+
+1. Use KambojaJS [`ApiController`](http://kambojajs.com/reference/api-controller) to create Restful API using convention over configuration
+2. Use `@http.root()` to create [nested Restful API](http://kambojajs.com/reference/api-controller#nested-resources) and keep using convention over configuration 
+3. Use `@val.type()` for adding [model validation](http://kambojajs.com/reference/validation) to an action parameter 
+4. Use [mongoose helper](https://github.com/kambojajs/kamboja-mongoose) automatically generate mongoose schema from model.
+5. Use [middleware](http://kambojajs.com/reference/middleware) to create custom error that return json result
+6. Use custom [dependency resolver](http://kambojajs.com/reference/dependency-injection) to add dependency injection functionalities
+
+## List of Routes that Automatically Generated
 
 Customer API
 
