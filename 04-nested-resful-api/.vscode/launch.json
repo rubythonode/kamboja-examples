@@ -5,29 +5,28 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Mocha",
             "type": "node",
             "request": "launch",
+            "name": "Mocha Tests",
             "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-            //"stopOnEntry": true,
             "args": [
-                "--no-timeouts",
-                "--recursive",
-                "--colors"
-            ], 
-            "cwd": "${workspaceRoot}",
-            "runtimeExecutable": null,
-            "env": {
-                "NODE_ENV": "testing"
-            }
+                "-u",
+                "tdd",
+                "--timeout",
+                "999999",
+                "--colors",
+                "${workspaceRoot}/test"
+            ],
+            "internalConsoleOptions": "openOnSessionStart"
         },
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch",
-            "program": "${workspaceRoot}/app/index.js",
-            "cwd": "${workspaceRoot}",
-            "outFiles": []
+            "name": "Launch Program",
+            "program": "${workspaceRoot}/bin",
+            "outFiles": [
+                "${workspaceRoot}/out/**/*.js"
+            ]
         }
     ]
 }

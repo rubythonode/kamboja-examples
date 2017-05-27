@@ -13,5 +13,5 @@ Requirements:
 $ git clone git@github.com:kambojajs/kamboja-examples.git
 $ cd 03-simple-mongodb-restful-api
 $ npm install
-$ tsc && node src/app.js
+$ tsc && node bin
 ```
